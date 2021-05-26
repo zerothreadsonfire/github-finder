@@ -1,7 +1,6 @@
 const Alert = (props) => {
     const {alert} = props;
 
-
     return(
         <div className="container">
             {alert!==null && <div className={`alert alert-${alert.type}`}>

@@ -1,10 +1,12 @@
-import { Component } from 'react';
+import { Component, Fragment } from 'react';
 import Navbar from "./components/layouts/Navbar";
 import Users from "./components/users/Users";
 import './App.css';
 import axios from 'axios';
 import Search from './components/users/Search';
 import Alert from "./components/layouts/Alert";
+import About from "./components/pages/About";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 
 class App extends Component {
   
@@ -49,7 +51,7 @@ class App extends Component {
     setTimeout(()=> this.setState({
       ...this.state,
       alert: null
-    }), 1000);
+    }), 3000);
     
   }
 
@@ -57,13 +59,22 @@ class App extends Component {
     const {users, loading, alert} = this.state;
 
     return(
-      <div className="App">
-        <Navbar title="Github Finder" icon="fab fa-github"/>
-        <Alert alert={alert} />
-        <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClearUsersButton={users.length>0?true:false} setAlert={this.setAlert}/>
-        <Users loading={loading} users={users}/>
-      </div>
-    )
+      <BrowserRouter>
+        <div className="App">
+          <Navbar title="Github Finder" icon="fab fa-github"/>
+          <Alert alert={alert} />
+          <Switch>
+            <Route exact path="/" render = {props => (
+              <Fragment>
+                <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClearUsersButton={users.length>0?true:false} setAlert={this.setAlert}/>
+                <Users loading={loading} users={users}/>
+              </Fragment>
+            )}/>
+            <Route exact path="/about" component={About}/>
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
   }
 
 }
