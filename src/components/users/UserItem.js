@@ -1,10 +1,13 @@
+import {Link} from "react-router-dom";
+
 const UserItem = (props) => {
     const {avatar_url, login, html_for} = props.user;
+
     return(
         <div className="card text-center">
-            <img alt={login} src={avatar_url} className="round-img"/>
+            <img alt={login} src={avatar_url} className="round-img" style={{width: "100px"}}/>
             <h3 className="text-center">{login}</h3>
-            <a href={html_for} className="btn btn-dark btn-sm my-1">More</a>
+            <Link to={`/user/${login}`} className="btn btn-dark btn-sm my-1">More</Link>
         </div>
     )
 }

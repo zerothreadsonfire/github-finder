@@ -6,6 +6,7 @@ import axios from 'axios';
 import Search from './components/users/Search';
 import Alert from "./components/layouts/Alert";
 import About from "./components/pages/About";
+import Profile from "./components/users/Profile";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 
 class App extends Component {
@@ -13,7 +14,8 @@ class App extends Component {
   state = {
     users: [],
     loading: false,
-    alert: null
+    alert: null,
+    user: {}
   }
 
   searchUsers = async (text) => {
@@ -29,6 +31,22 @@ class App extends Component {
       ...prevState,
       loading: false,
       users: result.data.items
+    }));
+  }
+
+  getSingleUser = async (username) => {
+    this.setState( prevState => ({
+      ...prevState,
+      loading: true
+    }));
+
+    const result = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
+    client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+    
+    this.setState( prevState => ({
+      ...prevState,
+      loading: false,
+      user: result.data
     }));
   }
 
@@ -71,6 +89,9 @@ class App extends Component {
               </Fragment>
             )}/>
             <Route exact path="/about" component={About}/>
+            <Route exact path="/user/:login" render={ props => (
+              <Profile getUser={this.getSingleUser} user={this.state.user} loading={this.state.loading} {...props}/>
+            )}/>
           </Switch>
         </div>
       </BrowserRouter>
