@@ -1,12 +1,14 @@
 import { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../layouts/Spinner";
+import Repos from "../repos/Repos";
 
 class Profile extends Component{
 
     componentDidMount(){
         const username = this.props.match.params.login;
         this.props.getUser(username);
+        this.props.getRepos(username);
     }
 
     render(){
@@ -26,7 +28,7 @@ class Profile extends Component{
             hireable
         } = this.props.user
 
-        const {loading} = this.props;
+        const {loading, repos} = this.props;
 
         if(loading===true) return <Spinner />;
         else {
@@ -71,6 +73,8 @@ class Profile extends Component{
                         <div className="badge badge-light">Public Repos: {public_repos}</div>
                         <div className="badge badge-dark">Public Gists: {public_gists}</div>
                     </div>
+
+                    <Repos repos={repos}/>
                 </div>
             )
         }
