@@ -19,8 +19,7 @@ const App = () => {
   const searchUsers = async (text) => {
     setLoading(true);
 
-    const result = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
-    client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+    const result = await axios.get(`https://api.github.com/search/users?q=${text}`);
     
     setLoading(false);
     setUsers(result.data.items);
@@ -29,8 +28,7 @@ const App = () => {
   const getSingleUser = async (username) => {
     setLoading(true);
 
-    const result = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
-    client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+    const result = await axios.get(`https://api.github.com/users/${username}`);
     
     setLoading(false);
     setUser(result.data);
@@ -39,8 +37,7 @@ const App = () => {
   const getUserRepos = async username => {
     setLoading(true);
 
-    const result = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&
-    client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+    const result = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`);
     
     setLoading(false);
     setRepos(result.data);

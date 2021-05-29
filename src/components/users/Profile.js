@@ -9,6 +9,7 @@ const Profile = ({user, getUser, getRepos, loading, repos, match}) => {
         const username = match.params.login;
         getUser(username);
         getRepos(username);
+        // eslint-disable-next-line
     }, []);
 
     const {
